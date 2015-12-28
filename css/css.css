@@ -16,3 +16,6 @@
 .calc-table td {
   padding: 2px;
 }
+.calc-table button.result {
+  width: 100%;
+}
