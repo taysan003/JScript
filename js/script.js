@@ -46,33 +46,57 @@ $(function input_number(){
      var mass = lastValue.split(' ');
      //console.log(mass);
      var result = 0;
-     for(var i = 0; i < mass.length; i++ ){
-     
-       if ($.inArray(mass[i], arrayOperators) != -1){
-        switch (mass[i]) {
-          case '+':
-           result = parseInt( mass[i-1]) + parseInt(mass[i+1]);
-           mass[i+1] = result;
-           break;
-          case '-':
-           result = parseInt(mass[i-1]) - parseInt(mass[i+1]);
-           mass[i+1] = result;
-           break;
-          case '/':
-           result = parseInt(mass[i-1]) / parseInt(mass[i+1]);
-           mass[i+1] = result;
-           break;
-          case '*':
-           result = parseInt(mass[i-1]) * parseInt(mass[i+1]);
-           mass[i+1] = result;
-           break;
-          default:
+  
+    for(var i = 0; i < mass.length; i++ ){
+        if ($.inArray(mass[i], ['*', '/']) != -1){
+            calcVal(mass, i); 
+            mass.splice(i-1, 2);                              // Delete one of elements (first), don't leave free space in array. As result 
+        
             
         }
-      }
-    }
-
-  calcInput.val(result); 
+    
+  }
+  
+  
+  for(var i = 0; i < mass.length; i++ ){
+     
+       if ($.inArray(mass[i], arrayOperators) != -1){
+        calcVal(mass, i); 
+    
+  }
+  }
+  
+  calcInput.val(mass[mass.length-1]); 
   
   });
+  /** Calculate naibour elements of array and put it in the second position . 
+   *@mas array
+   * Array with number
+   * @i integer
+   * Index of current array element.   
+   */
+  function calcVal(mass, i) {
+    switch (mass[i]) {
+            case '+':
+             result = parseInt( mass[i-1]) + parseInt(mass[i+1]);
+             mass[i+1] = result;
+             break;
+            case '-':
+             result = parseInt(mass[i-1]) - parseInt(mass[i+1]);
+             mass[i+1] = result;
+             break;
+            case '/':
+             result = parseInt(mass[i-1]) / parseInt(mass[i+1]);
+             mass[i+1] = result;
+             break;
+            case '*':
+             result = parseInt(mass[i-1]) * parseInt(mass[i+1]);
+             mass[i+1] = result;
+             break;
+            default:
+              
+          }
+    
+    };
+  
 });
